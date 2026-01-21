@@ -1,24 +1,43 @@
-# Proyecto_Ensamblador
-1. Descripción General y Objetivos El presente proyecto consiste en el diseño e implementación de un sistema de bajo nivel capaz de traducir datos numéricos abstractos (valores hexadecimales del 0 al F) en representaciones visuales comprensibles para el usuario humano. El objetivo central es programar la lógica de control de un display de 7 segmentos utilizando lenguaje Ensamblador, gestionando directamente la interacción entre el procesador y el periférico de salida.
+Plan de Trabajo: Desarrollo del Controlador de Display de 7 Segmentos
+El desarrollo del proyecto se estructura en cinco fases secuenciales, diseñadas para aislar la complejidad lógica de la complejidad sintáctica del lenguaje Ensamblador. Esta metodología asegura que cada etapa valide los resultados de la anterior antes de avanzar.
 
-2. Justificación Técnica: El Papel del Lenguaje Ensamblador La elección del lenguaje Ensamblador para este proyecto no es arbitraria, sino fundamental para el control del hardware. A diferencia de los lenguajes de alto nivel, donde el compilador y el sistema operativo abstraen la gestión de los recursos, en este proyecto el Ensamblador cumple tres funciones críticas:
+Fase 1: Ingeniería de Datos y Mapeo de Hardware
+El objetivo inicial es determinar los valores estáticos que alimentarán el sistema. Antes de escribir cualquier línea de código, es necesario traducir la representación visual de los números decimales (0-9) a su equivalente en señales digitales.
 
-Control Directo de Hardware (Bit-Banging): El display de 7 segmentos carece de lógica interna; es un arreglo de LEDs que deben ser encendidos o apagados individualmente. El Ensamblador permite manipular cada bit de los registros de salida con precisión absoluta. El programador define explícitamente qué pines reciben voltaje, transformando un byte de datos (ej. 00000110) en una señal eléctrica física.
+Se realizará un análisis de la tabla de verdad, asignando cada segmento del display (a, b, c, d, e, f, g) a un bit específico de un byte (del bit 0 al bit 6). Mediante este mapeo manual, se calcularán los códigos hexadecimales necesarios para dibujar cada número.
 
-Gestión Manual de Memoria: El proyecto exige el cálculo explícito de direcciones de memoria (punteros). El código no solicita una variable por su nombre, sino que calcula su ubicación física exacta mediante el uso de direcciones base y desplazamientos (offsets), una competencia esencial en la ingeniería de computadores.
+Entregable: Tabla de verdad en Excel (tabla_verdad.xlsx) con los 16 códigos hexadecimales verificados.
 
-3. Lógica de Implementación: La Tabla de Búsqueda (LUT) Para optimizar el rendimiento del procesador y evitar el uso ineficiente de múltiples sentencias condicionales (como largas cadenas de if/else o switch), el sistema utiliza una estructura de datos conocida como Tabla de Búsqueda o Look-Up Table (LUT).
+Fase 2: Prototipado y Validación Lógica (Python)
+Para mitigar el riesgo de errores lógicos durante la programación en bajo nivel, se implementará primero una simulación del algoritmo en un lenguaje de alto nivel (Python). Esta fase utiliza el entorno de VS Code para validar que los códigos hexadecimales calculados en la Fase 1 generan los patrones visuales correctos.
 
-Esta técnica se fundamenta en almacenar en la memoria de datos los patrones de bits precalculados que corresponden a cada dígito. Por ejemplo, en la posición 0 de la tabla se almacena el byte 0x3F (que enciende los segmentos necesarios para formar un "0"), y en la posición 1 se almacena 0x06 (para el "1").
+El script de Python actuará como un "banco de pruebas", simulando las operaciones de desplazamiento de bits (shifts) y máscaras (AND) que posteriormente realizará la CPU.
 
-4. Flujo de Ejecución del Sistema El algoritmo diseñado opera bajo el siguiente ciclo de instrucciones:
+Entregable: Script de simulación funcional (simulador.py) validando la integridad de los datos.
 
-Entrada de Datos: El sistema recibe un valor numérico (índice) que representa el dígito a mostrar.
+Fase 3: Configuración del Entorno y Estructura Base
+Esta fase se centra en la infraestructura. Se procederá a la instalación y configuración del entorno de desarrollo (IDE) específico para la arquitectura elegida (MARS para MIPS o SASM para x86).
 
-Cálculo de Dirección Efectiva: El procesador suma este valor numérico a la dirección base donde inicia la Tabla de Búsqueda. Esto genera un puntero que señala exactamente al patrón de bits deseado.
+Se creará el archivo fuente principal (main.asm) definiendo las secciones críticas de memoria:
 
-Acceso a Memoria (Load): Se ejecuta una instrucción de carga para extraer el byte de configuración desde la dirección calculada.
+Sección .data: Donde se transcribirá la Tabla de Búsqueda (LUT) validada en la fase anterior.
 
-Mapeo de Salida (I/O): Finalmente, el byte recuperado se escribe en el puerto de salida mapeado al display. Cada bit del registro activa un segmento específico (a, b, c, d, e, f, g), visualizando el número instantáneamente.
+Sección .text: Donde se establecerá el punto de entrada del programa y una rutina básica de finalización (exit) para asegurar que el código compila y se ejecuta sin errores de sintaxis.
 
-5. Conclusión Este proyecto demuestra la capacidad del lenguaje Ensamblador para eliminar las capas de abstracción de software, permitiendo al ingeniero actuar como un puente directo entre la lógica digital y los componentes electrónicos. Ilustra principios fundamentales de arquitectura de computadores como el mapeo de memoria, la aritmética de punteros y la decodificación por software.
+Entregable: Archivo .asm compilable con la estructura de memoria definida.
+
+Fase 4: Implementación del Algoritmo en Ensamblador
+Esta es la fase crítica de desarrollo, donde se traduce la lógica validada a instrucciones máquina. Se subdivide en dos tareas:
+
+Aritmética de Punteros: Implementación de la lógica de acceso a memoria. Se programará el cálculo de direcciones efectivas (Dirección Base + Índice) para recuperar el patrón de bits correcto según el número ingresado por el usuario.
+
+Decodificación (Bit-Banging): Implementación del bucle de visualización. Se utilizarán instrucciones de manipulación de bits para leer secuencialmente el registro recuperado y activar las señales de salida correspondientes (simuladas mediante impresión en consola o I/O mapeado en memoria).
+
+Entregable: Código fuente completo y funcional capaz de traducir una entrada numérica en su representación gráfica.
+
+Fase 5: Documentación Técnica y Entrega
+La fase final se dedica a elevar la calidad del proyecto. Se documentará el código fuente añadiendo comentarios explicativos en cada bloque de instrucciones, justificando el uso de registros y la gestión de la pila.
+
+Asimismo, se generará el diagrama de flujo final utilizando herramientas de diagramación (Draw.io) y se redactará el archivo README.md, consolidando la información técnica, las instrucciones de uso y la justificación teórica del diseño.
+
+Entregable: Paquete final del proyecto (.zip) con código, documentación y memoria técnica.
