@@ -14,8 +14,12 @@ section .text
 
 global _start
 _start:
-
-
+    ; sys_write(stdout, menu, menu_len)
+    mov  eax, 4        ; sys_write
+    mov  ebx, 1        ; stdout
+    mov  ecx, menu     ; dirreccion del mensaje
+    mov  edx, menu_len ; longitud del mensaje
+    int  0x80
 
     ;Salida del programa
     mov eax, 1
