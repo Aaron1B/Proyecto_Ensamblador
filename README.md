@@ -108,4 +108,3 @@ Tareas:
 [ ] Manejar el salto de línea residual que la llamada sys_read captura al pulsar la tecla Enter en la consola.
 
 [ ] Modularizar el código creando macros en NASM para las llamadas de impresión y lectura, reduciendo así la repetición de instrucciones en el archivo fuente.
-a
