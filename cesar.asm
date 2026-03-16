@@ -26,6 +26,27 @@ _start:
     mov ecx,  opcion
     mov edx,  1 
     int 0x80
+    
+    ;  Comparar opcion 
+    cmp byte [opcion], '1'
+    je  opcion_cifrar 
+
+    cmp byte [opcion], '2'
+    je opcion_descifrar
+
+    cmp byte [opcion], '3'
+    je salir
+
+    opcion_cifrar:
+    mov eax, 1
+    mov ebx, 0
+    int 0x80
+
+opcion_descifrar:
+    mov eax, 1
+    mov ebx, 0
+    int 0x80
+
     ;Salida del programa
     mov eax, 1
     mov ebx, 0
