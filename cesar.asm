@@ -9,7 +9,7 @@ section .data
 
 
 section .bss
-
+    opcion_usuario resb 1
 section .text
 
 global _start
@@ -24,5 +24,5 @@ _start:
     ;Salida del programa
     mov eax, 1
     mov ebx, 0
-    int 0x80
+    int 0x80 
 
