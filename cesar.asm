@@ -13,7 +13,11 @@ section .bss
 section .text
 
 global _start
-start:
+_start:
+
+
+
+    ;Salida del programa
     mov eax, 1
     mov ebx, 0
     int 0x80
