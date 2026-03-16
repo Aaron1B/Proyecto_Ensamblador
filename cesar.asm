@@ -20,7 +20,12 @@ _start:
     mov  ecx, menu     ; dirreccion del mensaje
     mov  edx, menu_len ; longitud del mensaje
     int  0x80
-
+    ; Leer opcion 
+    mov eax,  3
+    mov ebx,  0
+    mov ecx,  opcion
+    mov edx,  1 
+    int 0x80
     ;Salida del programa
     mov eax, 1
     mov ebx, 0
