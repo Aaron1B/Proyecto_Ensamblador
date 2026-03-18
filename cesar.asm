@@ -83,6 +83,16 @@ opcion_cifrar:
     mov [clave], al
 
     mov esi, mensaje
+
+    mov ecx, [longitud_mensaje]
+bucle_recorrido:
+    cmp ecx, 0
+    je fin_bucle
+    
+    inc esi 
+    dec ecx
+    jmp bucle_recorrido
+fin_bucle:
     jmp salir
 
 opcion_descifrar:
