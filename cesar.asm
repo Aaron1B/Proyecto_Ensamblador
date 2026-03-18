@@ -89,8 +89,24 @@ bucle_recorrido:
     cmp ecx, 0
     je fin_bucle
     mov al, [esi]  
-     
 
+    cmp al, 'A'
+    jl siguiente_caracter 
+    cmp al 'Z' 
+    jle es_mayuscula 
+
+    cmp al, 'a'
+    jl siguiente_caracter
+    cmp al, 'z'
+    jle es_minuscula 
+
+    jmp siguiente_caracter
+es_mayuscula
+    jmp siguiente_caracter
+es_minuscula
+    jmp siguiente_caracter
+
+siguiente_caracter:
     inc esi 
     dec ecx
     jmp bucle_recorrido
