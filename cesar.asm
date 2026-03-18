@@ -1,8 +1,8 @@
 section .data
-    menu db "1  Menú", 10, \
-            "2  Cifrar", 10, \
-            "3 Descifrar", 10, \
-            "4 Salir", 10, \
+    menu db " Menú", 10, \
+            "1  Cifrar", 10, \
+            "2 Descifrar", 10, \
+            "3 Salir", 10, \
             "Selecciona una opción: "
     
     menu_len equ $ - menu
