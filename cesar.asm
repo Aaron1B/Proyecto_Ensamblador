@@ -1,6 +1,6 @@
 section .data
-    menu db " Menú", 10, \
-            "1  Cifrar", 10, \
+    menu db " - Menú -", 10, \
+            "1 Cifrar", 10, \
             "2 Descifrar", 10, \
             "3 Salir", 10, \
             "Selecciona una opción: "
