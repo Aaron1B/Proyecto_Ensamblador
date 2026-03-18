@@ -108,3 +108,18 @@ Tareas:
 [ ] Manejar el salto de línea residual que la llamada sys_read captura al pulsar la tecla Enter en la consola.
 
 [ ] Modularizar el código creando macros en NASM para las llamadas de impresión y lectura, reduciendo así la repetición de instrucciones en el archivo fuente.
+
+
+
+
+Instrucciones para ejecutar:
+
+    - Ordenador Aarón :
+
+cd /mnt/c/Users/Aaron/Documents/GitHub/Proyecto_Ensamblador
+sudo apt update
+sudo apt install nasm
+nasm -f elf32 -o cesar.o cesar.asm
+ld -m elf_i386 -o cesar cesar.o
+
+./cesar
