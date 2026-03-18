@@ -1,8 +1,8 @@
 section .data
-    menu db "Menú", 10, \
-            "Cifrar", 10, \
-            "Descifrar", 10, \
-            "Salir", 10, \
+    menu db "1 - Menú", 10, \
+            "2 - Cifrar", 10, \
+            "3 -Descifrar", 10, \
+            "4 -Salir", 10, \
             "Selecciona una opción: "
     
     menu_len equ $ - menu
@@ -10,10 +10,16 @@ section .data
     pedir_texto db "Introduce el texto a cifrar: "
     pedir_texto_len equ $ - pedir_texto
 
+    pedir_clave db "Introduce la clave de cifrado (0-25): "
+    pedir_clave_len equ $ - pedir_clave
+
 section .bss
     opcion_usuario resb 1
     mensaje resb 256
     longitud_mensaje resd 1 ; Longitud del mensaje del usuario
+
+    clave resb 2
+
 
 section .text
 global _start
