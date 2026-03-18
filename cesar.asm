@@ -26,10 +26,10 @@ global _start
 
 _start:
     ; sys_write(stdout, menu, menu_len)
-    mov  eax, 4        ; sys_write
-    mov  ebx, 1        ; stdout
-    mov  ecx, menu     ; direccion del mensaje
-    mov  edx, menu_len ; longitud del mensaje
+    mov  eax, 4
+    mov  ebx, 1
+    mov  ecx, menu
+    mov  edx, menu_len
     int  0x80
 
     ; Leer opcion 
@@ -93,7 +93,7 @@ bucle_recorrido:
 
     cmp al, 'A'
     jl siguiente_caracter 
-    cmp al 'Z' 
+    cmp al, 'Z' 
     jle es_mayuscula 
 
     cmp al, 'a'
@@ -105,12 +105,16 @@ bucle_recorrido:
 es_mayuscula:
     add al, [clave]
     cmp al, 'Z'
-    jle siguiente_caracter
+    jle guardar_caracter
     sub al, 26
-    jmp siguiente_caracter
+    jmp guardar_caracter
+
 es_minuscula:
     add al, [clave]
-    jmp siguiente_caracter
+    jmp guardar_caracter
+
+guardar_caracter:
+    mov [esi], al
 
 siguiente_caracter:
     inc esi 
