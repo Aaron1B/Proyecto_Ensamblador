@@ -7,8 +7,13 @@ section .data
     
     menu_len equ $ - menu
 
+    pedir_texto db "Introduce el texto a cifrar: "
+    pedir_texto_len equ $ - pedir_texto
+
 section .bss
     opcion_usuario resb 1
+    mensaje resb 256
+    longitud_mensaje resd 1 ; Longitud del mensaje del usuario
 
 section .text
 global _start
@@ -41,9 +46,21 @@ _start:
     jmp _start
 
 opcion_cifrar:
-    mov eax, 1
-    mov ebx, 0
+    mov eax, 4                 
+    mov ebx, 1                
+    mov ecx, pedir_texto     
+    mov edx, pedir_texto_len 
     int 0x80
+
+    mov eax, 3                 
+    mov ebx, 0                  
+    mov ecx, mensaje           
+    mov edx, 256                
+    int 0x80
+
+    mov [longitud_mensaje], eax ; Guardar Longitud
+
+    jmp salir
 
 opcion_descifrar:
     mov eax, 1
