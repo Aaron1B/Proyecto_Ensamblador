@@ -78,6 +78,10 @@ opcion_cifrar:
     mov edx, 2
     int 0x80
 
+    mov, al [clave]
+    sub al, '0';Conversion de ASCII a número
+    mov [clave], al
+
     jmp salir
 
 opcion_descifrar:
