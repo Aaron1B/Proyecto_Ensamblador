@@ -104,6 +104,9 @@ bucle_recorrido:
     jmp siguiente_caracter
 es_mayuscula:
     add al, [clave]
+    cmp al, 'Z'
+    jle siguiente_caracter
+    sub al, 26
     jmp siguiente_caracter
 es_minuscula:
     add al, [clave]
