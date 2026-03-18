@@ -88,7 +88,9 @@ opcion_cifrar:
 bucle_recorrido:
     cmp ecx, 0
     je fin_bucle
-    
+    mov al, [esi]  
+     
+
     inc esi 
     dec ecx
     jmp bucle_recorrido

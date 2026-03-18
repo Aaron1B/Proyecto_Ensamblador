@@ -39,7 +39,7 @@ Tareas:
 
 [ ] Reservar un espacio de memoria contiguo en .bss, por ejemplo doscientos cincuenta y seis bytes, para el mensaje del usuario.
 
-[ ] Solicitar y leer el mensaje de texto utilizando sys_read y guardar la longitud real leída.
+[ ] Solicitar y leer el mensaje de texto utilizando sys_read y guardar la longitud real leída..
 
 [ ] Solicitar y leer la clave de desplazamiento ingresada por el usuario.
 
