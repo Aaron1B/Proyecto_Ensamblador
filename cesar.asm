@@ -88,6 +88,7 @@ opcion_cifrar:
 bucle_recorrido:
     cmp ecx, 0
     je fin_bucle
+
     mov al, [esi]  
 
     cmp al, 'A'
@@ -101,9 +102,11 @@ bucle_recorrido:
     jle es_minuscula 
 
     jmp siguiente_caracter
-es_mayuscula
+es_mayuscula:
+    add al, [clave]
     jmp siguiente_caracter
-es_minuscula
+es_minuscula:
+    add al, [clave]
     jmp siguiente_caracter
 
 siguiente_caracter:
