@@ -52,6 +52,10 @@ _start:
     jmp _start
 
 opcion_cifrar:
+    call cifrar
+    jmp salir
+
+cifrar:
     mov eax, 4                 
     mov ebx, 1                
     mov ecx, pedir_texto     
