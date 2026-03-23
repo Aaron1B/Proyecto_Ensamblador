@@ -56,6 +56,12 @@ opcion_cifrar:
     jmp salir
 
 cifrar:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    push esi
+
     mov eax, 4                 
     mov ebx, 1                
     mov ecx, pedir_texto     
