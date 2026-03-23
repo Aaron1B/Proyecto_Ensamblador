@@ -139,6 +139,19 @@ fin_bucle:
     pop ecx
     pop ebx
     pop eax
+
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg_resultado
+    mov edx, msg_resultado_len
+    int 0x80
+
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mensaje
+    mov edx, [longitud_mensaje] ; ¡Usamos la longitud exacta!
+    int 0x80
+
     ret
 
 opcion_descifrar:
