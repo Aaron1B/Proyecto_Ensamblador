@@ -13,6 +13,9 @@ section .data
     pedir_clave db "Introduce la clave de cifrado (0-25): "
     pedir_clave_len equ $ - pedir_clave
 
+    msg_resultado db "El mensaje cifrado es: "
+    msg_resultado_len equ $ - msg_resultado
+
 section .bss
     opcion_usuario resb 1
     mensaje resb 256
