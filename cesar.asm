@@ -131,6 +131,11 @@ siguiente_caracter:
     dec ecx
     jmp bucle_recorrido
 fin_bucle:
+    pop esi
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
     ret
 
 opcion_descifrar:
