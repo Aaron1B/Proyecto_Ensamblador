@@ -125,7 +125,7 @@ siguiente_caracter:
     dec ecx
     jmp bucle_recorrido
 fin_bucle:
-    jmp salir
+    ret
 
 opcion_descifrar:
     mov eax, 1
