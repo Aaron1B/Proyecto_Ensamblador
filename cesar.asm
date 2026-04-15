@@ -52,7 +52,7 @@ _start:
 
 opcion_cifrar:
     call cifrar
-    jmp salir
+    jmp _start
 
 cifrar:
     push eax
@@ -154,7 +154,7 @@ fin_bucle:
 
 opcion_descifrar:
     call descifrar
-    jmp salir
+    jmp _start
 
 descifrar:
     push eax
