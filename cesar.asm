@@ -17,11 +17,10 @@ section .data
     msg_resultado_len equ $ - msg_resultado
 
 section .bss
-    opcion_usuario resb 1
+    opcion_usuario resb 2
     mensaje resb 256
     longitud_mensaje resd 1
-
-    clave resb 2
+    clave resb 4
 
 section .text
 global _start
@@ -36,7 +35,7 @@ _start:
     mov eax,  3
     mov ebx,  0
     mov ecx,  opcion_usuario
-    mov edx,  1 
+    mov edx,  2 
     int 0x80
     
     cmp byte [opcion_usuario], '1'
@@ -84,17 +83,16 @@ cifrar:
     mov eax, 3
     mov ebx, 0
     mov ecx, clave
-    mov edx, 2
+    mov edx, 4
     int 0x80
 
     xor eax, eax
     mov al, [clave]
     sub al, '0'
     
-    ; --- Módulo 26 (Soporte > 26) ---
-    mov bl, 26      ; Divisor
-    div bl          ; Divide AX entre BL. Cociente en AL, Resto en AH.
-    mov [clave], ah ; Guardamos el resto (AH) como la clave definitiva.
+    mov bl, 26
+    div bl
+    mov [clave], ah
 
     mov esi, mensaje
     mov ecx, [longitud_mensaje]
@@ -196,17 +194,16 @@ descifrar:
     mov eax, 3
     mov ebx, 0
     mov ecx, clave
-    mov edx, 2
+    mov edx, 4
     int 0x80
 
     xor eax, eax
     mov al, [clave]
     sub al, '0'
     
-    ; --- Módulo 26 (Soporte > 26) ---
-    mov bl, 26      ; Divisor
-    div bl          ; Divide AX entre BL. Cociente en AL, Resto en AH.
-    mov [clave], ah ; Guardamos el resto (AH) como la clave definitiva.
+    mov bl, 26
+    div bl
+    mov [clave], ah
 
     mov esi, mensaje
     mov ecx, [longitud_mensaje]
