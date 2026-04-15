@@ -19,30 +19,26 @@ section .data
 section .bss
     opcion_usuario resb 1
     mensaje resb 256
-    longitud_mensaje resd 1 ; Longitud del mensaje del usuario
+    longitud_mensaje resd 1
 
     clave resb 2
-
 
 section .text
 global _start
 
 _start:
-    ; sys_write(stdout, menu, menu_len)
     mov  eax, 4
     mov  ebx, 1
     mov  ecx, menu
     mov  edx, menu_len
     int  0x80
 
-    ; Leer opcion 
     mov eax,  3
     mov ebx,  0
     mov ecx,  opcion_usuario
     mov edx,  1 
     int 0x80
     
-    ; Comparar opcion 
     cmp byte [opcion_usuario], '1'
     je  opcion_cifrar 
 
@@ -77,7 +73,7 @@ cifrar:
     mov edx, 256                
     int 0x80
 
-    mov [longitud_mensaje], eax ; Guardar Longitud
+    mov [longitud_mensaje], eax
 
     mov eax, 4                 
     mov ebx, 1
@@ -92,12 +88,12 @@ cifrar:
     int 0x80
 
     mov al, [clave]
-    sub al, '0';Conversion de ASCII a número
+    sub al, '0'
     mov [clave], al
 
     mov esi, mensaje
-
     mov ecx, [longitud_mensaje]
+
 bucle_recorrido:
     cmp ecx, 0
     je fin_bucle
@@ -115,6 +111,7 @@ bucle_recorrido:
     jle es_minuscula 
 
     jmp siguiente_caracter
+
 es_mayuscula:
     add al, [clave]
     cmp al, 'Z'
@@ -133,6 +130,7 @@ siguiente_caracter:
     inc esi 
     dec ecx
     jmp bucle_recorrido
+
 fin_bucle:
     pop esi
     pop edx
@@ -149,7 +147,7 @@ fin_bucle:
     mov eax, 4
     mov ebx, 1
     mov ecx, mensaje
-    mov edx, [longitud_mensaje] ; ¡Usamos la longitud exacta!
+    mov edx, [longitud_mensaje]
     int 0x80
 
     ret
@@ -158,7 +156,107 @@ opcion_descifrar:
     call descifrar
     jmp salir
 
-; Salida del programa
+descifrar:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    push esi
+
+    mov eax, 4                 
+    mov ebx, 1                
+    mov ecx, pedir_texto     
+    mov edx, pedir_texto_len 
+    int 0x80
+
+    mov eax, 3                 
+    mov ebx, 0                  
+    mov ecx, mensaje           
+    mov edx, 256                
+    int 0x80
+
+    mov [longitud_mensaje], eax
+
+    mov eax, 4                 
+    mov ebx, 1
+    mov ecx, pedir_clave
+    mov edx, pedir_clave_len
+    int 0x80
+
+    mov eax, 3
+    mov ebx, 0
+    mov ecx, clave
+    mov edx, 2
+    int 0x80
+
+    mov al, [clave]
+    sub al, '0'
+    mov [clave], al
+
+    mov esi, mensaje
+    mov ecx, [longitud_mensaje]
+
+bucle_recorrido_d:
+    cmp ecx, 0
+    je fin_bucle_d
+
+    mov al, [esi]  
+
+    cmp al, 'A'
+    jl siguiente_caracter_d 
+    cmp al, 'Z' 
+    jle es_mayuscula_d 
+
+    cmp al, 'a'
+    jl siguiente_caracter_d
+    cmp al, 'z'
+    jle es_minuscula_d 
+
+    jmp siguiente_caracter_d
+
+es_mayuscula_d:
+    sub al, [clave]
+    cmp al, 'A'
+    jge guardar_caracter_d
+    add al, 26
+    jmp guardar_caracter_d
+
+es_minuscula_d:
+    sub al, [clave]
+    cmp al, 'a'
+    jge guardar_caracter_d
+    add al, 26
+    jmp guardar_caracter_d
+
+guardar_caracter_d:
+    mov [esi], al
+
+siguiente_caracter_d:
+    inc esi 
+    dec ecx
+    jmp bucle_recorrido_d
+
+fin_bucle_d:
+    pop esi
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg_resultado
+    mov edx, msg_resultado_len
+    int 0x80
+
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mensaje
+    mov edx, [longitud_mensaje]
+    int 0x80
+
+    ret
+
 salir:
     mov eax, 1
     mov ebx, 0
