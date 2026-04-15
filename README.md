@@ -116,6 +116,7 @@ Instrucciones para ejecutar:
 
     - Ordenador Aarón :
 
+wsl
 cd /mnt/c/Users/Aaron/Documents/GitHub/Proyecto_Ensamblador
 sudo apt update
 sudo apt install nasm
