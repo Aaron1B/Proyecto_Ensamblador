@@ -87,6 +87,7 @@ cifrar:
     mov edx, 2
     int 0x80
 
+    xor eax, eax
     mov al, [clave]
     sub al, '0'
     mov [clave], al
@@ -194,6 +195,7 @@ descifrar:
     mov edx, 2
     int 0x80
 
+    xor eax, eax
     mov al, [clave]
     sub al, '0'
     mov [clave], al
