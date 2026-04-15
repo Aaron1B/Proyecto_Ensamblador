@@ -90,7 +90,11 @@ cifrar:
     xor eax, eax
     mov al, [clave]
     sub al, '0'
-    mov [clave], al
+    
+    ; --- Módulo 26 (Soporte > 26) ---
+    mov bl, 26      ; Divisor
+    div bl          ; Divide AX entre BL. Cociente en AL, Resto en AH.
+    mov [clave], ah ; Guardamos el resto (AH) como la clave definitiva.
 
     mov esi, mensaje
     mov ecx, [longitud_mensaje]
@@ -198,7 +202,11 @@ descifrar:
     xor eax, eax
     mov al, [clave]
     sub al, '0'
-    mov [clave], al
+    
+    ; --- Módulo 26 (Soporte > 26) ---
+    mov bl, 26      ; Divisor
+    div bl          ; Divide AX entre BL. Cociente en AL, Resto en AH.
+    mov [clave], ah ; Guardamos el resto (AH) como la clave definitiva.
 
     mov esi, mensaje
     mov ecx, [longitud_mensaje]
