@@ -150,6 +150,11 @@ fin_bucle:
     mov edx, [longitud_mensaje]
     int 0x80
 
+    xor eax, eax
+    xor ebx, ebx
+    xor ecx, ecx
+    xor edx, edx
+
     ret
 
 opcion_descifrar:
@@ -254,6 +259,11 @@ fin_bucle_d:
     mov ecx, mensaje
     mov edx, [longitud_mensaje]
     int 0x80
+
+    xor eax, eax
+    xor ebx, ebx
+    xor ecx, ecx
+    xor edx, edx
 
     ret
 
