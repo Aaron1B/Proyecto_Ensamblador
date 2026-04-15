@@ -155,9 +155,8 @@ fin_bucle:
     ret
 
 opcion_descifrar:
-    mov eax, 1
-    mov ebx, 0
-    int 0x80
+    call descifrar
+    jmp salir
 
 ; Salida del programa
 salir:
